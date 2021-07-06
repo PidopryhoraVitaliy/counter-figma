@@ -1,35 +1,26 @@
 import { createStore } from "redux";
-
-const reducer = (state = 0, action) => {
-  switch (action.type) {
-    case 'INC':
-      return state + 1;
-    case 'DEC':
-      return state - 1;
-    case 'RES':
-        return 0;
-      default:
-      return state;
-  }
-}
-
-const inc = () => ({type: 'INC'});
-const dec = () => ({type: 'DEC'});
-const res = () => ({type: 'RES'});
+import reducer from "./reducer";
+import {inc, dec, res} from "./actions";
 
 const store = createStore(reducer);
+const {dispatch} = store;
+
+const bindActionCreator = (creator, dispatch) => {
+  return () => {
+    return () => dispatch(creator())
+  }
+};
+
+const incDispatch = () => dispatch(inc());
+const decDispatch = () => bindActionCreator(dec, dispatch);
 
 const update = () => {
   document.getElementById('counter').textContent = store.getState();
 }
 store.subscribe(update);
 
-document.getElementById('inc').addEventListener('click', () => {
-  store.dispatch(inc());
-})
-document.getElementById('dec').addEventListener('click', () => {
-  store.dispatch(dec());
-})
+document.getElementById('inc').addEventListener('click', incDispatch);
+document.getElementById('dec').addEventListener('click', decDispatch);
 document.getElementById('res').addEventListener('click', () => {
-  store.dispatch(res());
+  dispatch(res());
 })
