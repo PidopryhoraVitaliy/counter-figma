@@ -6,9 +6,11 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     display: flex;
 }
+
 .content{
     margin: auto
 }
+
 .counter-wrap{
     width: 300px;
     height: 300px;
@@ -19,7 +21,7 @@
     margin-bottom: 34px;
 }
 
-#counter{
+.counter{
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
